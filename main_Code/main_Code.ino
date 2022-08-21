@@ -34,7 +34,7 @@ void setup() {
 }
 
 void loop() {
-  
+
 
   digitalWrite(outTemp, LOW);
   digitalWrite(outEcho, LOW);
@@ -48,16 +48,16 @@ void loop() {
 
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
-  
-  if(distance != 0)
+
+  if (distance != 0)
   {
-  Serial.print("Distance: ");
-  Serial.println(distance);
+    Serial.print("Distance: ");
+    Serial.println(distance);
   }
-  
+
   if (distance > 0 && distance <= 15)
   {
-    
+
     digitalWrite(outEcho, HIGH);
     delay(1000);
 
@@ -66,21 +66,27 @@ void loop() {
       sensors.requestTemperatures();
       delay(100);
       Celsius = sensors.getTempCByIndex(0);
-      if (Celsius > -127 ) {
-        Serial.print(Celsius);
-        Serial.println(" C  ");
-        digitalWrite(outTemp, HIGH);
-        Serial.println("Output Triggered. Twenty seconds delay started...");
-        delay(5000);
-        break;
+      if (Celsius == -127 ) {
+        digitalWrite(outTemp, LOW);
       }
       else
       {
-        digitalWrite(outTemp, LOW);
+        Serial.print(Celsius);
+        Serial.println(" C  ");
+        if (Celsius >= 36 && Celsius <= 37)
+        {
+          digitalWrite(outTemp, HIGH);
+          Serial.println("Output Triggered. Twenty seconds delay started...");
+          delay(5000);
+          break;
+
+        }
+
+
       }
-     
+
     }
-    
+
   }
   else
   {
