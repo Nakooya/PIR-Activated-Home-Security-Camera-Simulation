@@ -5,7 +5,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 //Temperature Computation
-#used for temperature checking
+//used for temperature checking
 float Celsius = 0;
 
 //ULTRASONIC PIN ASSIGNMENT
@@ -49,9 +49,9 @@ void loop() {
 
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
-
   if (distance != 0)
   {
+    
     Serial.print("Distance: ");
     Serial.println(distance);
   }
@@ -61,6 +61,7 @@ void loop() {
 
     digitalWrite(outEcho, HIGH);
     delay(1000);
+    int ctr = 0;
 
     while (1)
     {
@@ -72,18 +73,29 @@ void loop() {
       }
       else
       {
+        Serial.print("Temperature in Celsius:");
         Serial.print(Celsius);
-        Serial.println(" C  ");
+        Serial.print(" C    " );
         if (Celsius >= 36 && Celsius <= 37)
         {
           digitalWrite(outTemp, HIGH);
-          Serial.println("Output Triggered. Twenty seconds delay started...");
+          Serial.println("Output Triggered. Five seconds delay started...");
           delay(5000);
           break;
 
         }
-
-
+        else 
+        {
+          Serial.print("Temperature Reading#");
+          Serial.println(ctr+1);
+          ctr ++;
+          if (ctr == 10)
+          {
+            Serial.println("No Human Temperature Scanned");
+            break;
+          }
+        }
+      
       }
 
     }
