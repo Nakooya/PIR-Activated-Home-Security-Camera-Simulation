@@ -5,6 +5,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 //Temperature Computation
+#used for temperature checking
 float Celsius = 0;
 
 //ULTRASONIC PIN ASSIGNMENT
